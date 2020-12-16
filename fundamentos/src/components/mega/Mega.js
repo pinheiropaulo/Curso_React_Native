@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { Button } from "react-native";
-import { View } from "react-native";
-import { TextInput, Text } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from "react-native";
 
-import style from "../styles";
+import { Input } from "native-base";
+
 import MegaNumero from "./MegaNumero";
 
 export default class Mega extends Component {
@@ -50,28 +55,55 @@ export default class Mega extends Component {
 
   render() {
     return (
-      <>
-        <Text style={style.textG}>Gerador de Mega-Sena</Text>
-        <TextInput
-          keyboardType={"numeric"}
-          style={{ borderBottomWidth: 1 }}
-          placeholder="Qtde de Números"
-          value={`${this.state.qtdeNumeros}`}
-          onChangeText={this.alterarQtdeNumero}
-        />
-        <Button title="Gerar" onPress={this.gerarNumeros} />
-        <View
-          style={{
-            marginTop: 20,
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {this.exibirNumeros()}
+      <SafeAreaView style={style.container}>
+        <Text style={style.title}>Gerador de Mega-Sena</Text>
+        <View style={style.textInput}>
+          <Input
+            textAlign={"center"}
+            keyboardType={"numeric"}
+            style={{ borderBottomWidth: 1 }}
+            placeholder="Qtde de Números"
+            value={`${this.state.qtdeNumeros}`}
+            onChangeText={this.alterarQtdeNumero}
+          />
         </View>
-      </>
+        <TouchableOpacity style={style.button} onPress={this.gerarNumeros}>
+          <Text style={{ color: "#FFF", fontSize: 15 }}>Gerar</Text>
+        </TouchableOpacity>
+        <View style={style.numeros}>{this.exibirNumeros()}</View>
+      </SafeAreaView>
     );
   }
 }
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 25,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 50,
+    width: 80,
+    marginTop: 10,
+    backgroundColor: "#00b0ff",
+    borderRadius: 5,
+  },
+  textInput: {
+    justifyContent: "center",
+    width: 100,
+    height: 50,
+  },
+  numeros: {
+    marginTop: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
